@@ -1,35 +1,42 @@
-use QLDA;
+ï»¿use QLDA;
+go
 
--- 1. Tìm các nhân viên làm vi?c ? phòng s? 4
+-- 1. TÃ¬m cÃ¡c nhÃ¢n viÃªn lÃ m vi?c ? phÃ²ng s? 4
 select *
 from nhanvien
 where phg = 4;
+go
 
--- 2. Tìm các nhân viên có m?c l??ng trên 30000
+-- 2. TÃ¬m cÃ¡c nhÃ¢n viÃªn cÃ³ m?c l??ng trÃªn 30000
 select *
 from nhanvien
 where luong > 30000;
+go
 
--- 3. Tìm các nhân viên có m?c l??ng trên 25,000 ? phòng 4 ho?c các nhân viên có m?c l??ng trên 30,000 ? phòng 5
+-- 3. TÃ¬m cÃ¡c nhÃ¢n viÃªn cÃ³ m?c l??ng trÃªn 25,000 ? phÃ²ng 4 ho?c cÃ¡c nhÃ¢n viÃªn cÃ³ m?c l??ng trÃªn 30,000 ? phÃ²ng 5
 select *
 from nhanvien
 where (luong > 25000 and phg = 4) or (luong > 30000 and phg = 5);
+go
 
--- 4. Cho bi?t h? tên ??y ?? c?a các nhân viên ? TP HCM
+-- 4. Cho bi?t h? tÃªn ??y ?? c?a cÃ¡c nhÃ¢n viÃªn ? TP HCM
 select concat(honv, ' ', tenlot, ' ', tennv) as HoTen
 from nhanvien
-where dchi like N'%TP HCM%' or dchi like N'%TP H? Chí Minh%';
+where dchi like N'%TP HCM%' or dchi like N'%TP H? ChÃ­ Minh%';
+go
 
 select *
 from nhanvien;
+go
 
-
--- 5. Cho bi?t h? tên ??y ?? c?a các nhân viên có h? b?t ??u b?ng kı t? 'N'
+-- 5. Cho bi?t h? tÃªn ??y ?? c?a cÃ¡c nhÃ¢n viÃªn cÃ³ h? b?t ??u b?ng kÃ½ t? 'N'
 select concat(honv, ' ', tenlot, ' ', tennv) as HoTen
 from nhanvien
 where honv like N'N%';
+go
 
--- 6. Cho bi?t ngày sinh và ??a ch? c?a nhân viên Dinh Ba Tien
-select concat(honv, '', tenlot, '', tennv) as HoTen, ngsinh, dchi
+-- 6. Cho bi?t ngÃ y sinh vÃ  ??a ch? c?a nhÃ¢n viÃªn Dinh Ba Tien
+select concat(honv, ' ', tenlot, ' ', tennv) as HoTen, ngsinh, dchi
 from nhanvien
-where honv = N'?inh' and tenlot = N'Bá' and tennv = N'Tiên';
+where concat(honv, ' ', tenlot, ' ', tennv) = N'Äinh  BÃ¡  TiÃªn';
+go
