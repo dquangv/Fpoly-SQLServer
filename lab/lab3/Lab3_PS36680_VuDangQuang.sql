@@ -109,3 +109,33 @@ join nhanvien nv on nv.manv = phongban.trphg
 join nhanvien on nhanvien.phg = phongban.maphg
 group by concat(nv.honv, ' ', nv.tenlot, ' ', nv.tennv), ng_nhanchuc;
 go
+
+-- Bài 5: Bài thêm
+-- Cho biết nhân viên tham gia dự án có nhỏ tuổi nhất là bao nhiêu?
+select nv.*, mada
+from nhanvien nv
+join phancong pc on nv.manv = pc.ma_nvien
+where year(ngsinh) = (
+	select max(year(ngsinh))
+	from nhanvien);
+go
+
+-- Hiển thị danh sách nhân viên, thông tin gồm: Mã nhân viên, họ và tên, năm sinh, độ tuổi
+-- Được xét dựa trên tuổi:
+-- Tuổi >50 : Cao tuổi
+-- Tuổi từ 25 – 50: Trung bình
+-- Tuổi <25: Nhỏ tuổi
+select manv as MaNhanVien, concat(honv, ' ', tenlot, ' ', tennv) as HoVaTen, year(ngsinh) as NamSinh, DoTuoi = case
+	when year(getdate()) - year(ngsinh) > 50 then N'Cao tuổi'
+	when year(getdate()) - year(ngsinh) between 25 and 50 then N'Trung bình'
+	else N'Nhỏ tuổi'
+	end
+from nhanvien;
+go
+
+-- Với mỗi nhân viên có tham gia dự án, cho biết nhân viên đó tham gia bao nhiêu dự án và trung bình nhân viên đó tham gia bao nhêu giờ cho 1 dự án . Thông tin hiển thị gồm: TenNV, Số đề án đã tham gia, Thời gian trung bình cho một dự án.
+select tennv, count(mada) as SoDuAn, avg(thoigian) as ThoiGianTrungBinh
+from nhanvien nv
+join phancong pc on nv.manv = pc.ma_nvien
+group by tennv, ma_nvien
+go

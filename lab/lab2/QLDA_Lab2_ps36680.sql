@@ -211,7 +211,7 @@ go
 -- 2. Cho biết họ tên nhân viên (HONV, TENLOT, TENNV) có mức lương trên mức lương trung bình của phòng "Nghiên cứu”
 begin
 	declare @nhanVien_luongTB table
-	(tenNV nvarchar(30), luongTB money);
+	(tenNV nvarchar(30), luong money);
 
 	insert into @nhanVien_luongTB
 	select concat(honv, ' ', tenlot, ' ',tennv), luong
@@ -259,3 +259,44 @@ begin
 	select *
 	from @phongBan_deAn;
 end;
+go
+
+-- Cho biết các đề án mà số lượng nhân viên tham gia nhiều nhất
+begin
+	declare @DeAn_NVien table
+	(DeAn nvarchar(15), SoLuongNhanVien int);
+
+	insert into @DeAn_NVien
+	select tenda, count(manv)
+	from dean da
+	join phongban pb on da.phong = pb.maphg
+	join nhanvien nv on pb.maphg = nv.phg
+	group by tenda
+	having count(manv) >= (
+		select top 1 count(manv)
+		from dean da
+		join phongban pb on da.phong = pb.maphg
+		join nhanvien nv on pb.maphg = nv.phg
+		group by tenda
+		order by count(manv) desc);
+
+	select *
+	from @DeAn_NVien;
+end;
+go
+
+-- Cho biết danh sách nhân viên tham gia đề án do phòng "Nghiên Cứu" chủ trì
+begin
+	declare @NhVien_DeAn table
+	(honv nvarchar(15), tenlot nvarchar(15), tennv nvarchar(15), manv varchar(9), ngsinh date, dchi nvarchar(30), phai nchar(3), luong money, ma_nql varchar(9), phg int, tenpb nvarchar(15));
+
+	insert into @NhVien_DeAn
+	select nv.*, tenphg
+	from nhanvien nv
+	join phongban pb on nv.phg = pb.maphg
+	where tenphg = N'Nghiên Cứu';
+
+	select *
+	from @NhVien_DeAn;
+end;
+go
