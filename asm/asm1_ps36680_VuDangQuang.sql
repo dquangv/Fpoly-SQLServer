@@ -103,3 +103,33 @@ insert into danhgia values
 (7, 9, 1, 'like'),
 (8, 7, 0, 'dislike');
 go
+
+-- Tạo ba Stored Procedure (SP) với các tham số đầu vào phù hợp.
+-- SP thứ nhất thực hiện chèn dữ liệu vào bảng NGUOIDUNG
+create or alter proc nguoidung_insert
+@manguoidung int, @tennguoidung nvarchar(50), @gioitinh nchar(3),
+@dienthoai varchar(12), @diachi nvarchar(50), @quan nvarchar(20), @email varchar(50)
+as
+begin
+	if exists (
+		select *
+		from nguoidung
+		where manguoidung = @manguoidung and tennguoidung = @tennguoidung
+		and dienthoai = @dienthoai and diachi = @diachi and quan = @quan)
+			begin
+				insert into nguoidung values
+				(@manguoidung, @tennguoidung, @gioitinh, @dienthoai, @diachi, @quan, @email)
+				select *
+				from nguoidung
+			end;
+	else
+	print N'Yêu cầu nhập liệu đầy đủ';
+end;
+go
+
+exec nguoidung_insert 11, N'Trần Trọng Đăng Khoa', '01111111111', '1 Quang Trung, phường 1', 'Quận 12';
+go
+
+exec nguoidung_insert 12,
+-- SP thứ hai thực hiện chèn dữ liệu vào bảng NHATRO
+-- SP thứ ba thực hiện chèn dữ liệu vào bảng DANHGIA
