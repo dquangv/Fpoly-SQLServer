@@ -111,25 +111,26 @@ create or alter proc nguoidung_insert
 @dienthoai varchar(12), @diachi nvarchar(50), @quan nvarchar(20), @email varchar(50)
 as
 begin
-	if exists (
-		select *
-		from nguoidung
-		where manguoidung = @manguoidung and tennguoidung = @tennguoidung
-		and dienthoai = @dienthoai and diachi = @diachi and quan = @quan)
-			begin
-				insert into nguoidung values
-				(@manguoidung, @tennguoidung, @gioitinh, @dienthoai, @diachi, @quan, @email)
-				select *
-				from nguoidung
-			end;
+	if (@manguoidung is null) or (@tennguoidung is null) or (@dienthoai is null) or (@diachi is null) or (@quan is null)
+		begin
+			print N'Yêu cầu nhập đầy đủ dữ liệu';
+		end;
 	else
-	print N'Yêu cầu nhập liệu đầy đủ';
+		begin
+			insert into nguoidung values
+			(@manguoidung, @tennguoidung, @gioitinh, @dienthoai, @diachi, @quan, @email)
+			select *
+			from nguoidung;
+		end;
 end;
 go
 
-exec nguoidung_insert 11, N'Trần Trọng Đăng Khoa', '01111111111', '1 Quang Trung, phường 1', 'Quận 12';
+exec nguoidung_insert 11, N'Trần Trọng Đăng Khoa', null, '01111111111', N'1 Quang Trung, phường 1', N'Quận 12', null;
 go
 
-exec nguoidung_insert 12,
+exec nguoidung_insert 12, null, N'Nữ', '01222331121', N'2 Quang trung, phường 1', N'Quận 12', 'nguyenanhdiendo@gmail.com';
+go
+
 -- SP thứ hai thực hiện chèn dữ liệu vào bảng NHATRO
+
 -- SP thứ ba thực hiện chèn dữ liệu vào bảng DANHGIA
