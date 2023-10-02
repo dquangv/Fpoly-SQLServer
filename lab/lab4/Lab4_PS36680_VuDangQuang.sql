@@ -14,7 +14,7 @@ select phg, avg(luong)
 from nhanvien
 group by phg;
 
-select tennv, iif(luong < luongTB, 'TangLuong', 'KhongTangLuong') as TinhTrang
+select tennv, luong, luongTB, iif(luong < luongTB, 'TangLuong', 'KhongTangLuong') as TinhTrang
 from nhanvien nv
 join @LuongTrungBinh ltb on nv.phg = ltb.phongban;
 go
@@ -54,7 +54,7 @@ declare @i int = 2, @soCuoi int = (select max(cast(manv as int)) from nhanvien);
 while (@i <= @soCuoi)
 begin
 	if exists (
-		select honv, tenlot, tennv, manv
+		select manv
 		from nhanvien
 		where cast(manv as int) = @i)
 			begin
@@ -77,7 +77,7 @@ begin
 		continue;
 
 	if exists (
-		select honv, tenlot, tennv, manv
+		select manv
 		from nhanvien
 		where cast(manv as int) = @i)
 			begin

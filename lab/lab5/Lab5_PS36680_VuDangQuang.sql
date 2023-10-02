@@ -235,3 +235,59 @@ go
 
 exec lab5Bai3Cauc N'Vũ', N'Đăng', N'Quang', '018', '1998-09-07', '49 ĐN, TP HCM', 'Nam', 50000, 9;
 go
+
+-- Bài 4:
+-- Viết SP thêm một phân công công việc mới vào bảng phân công, tất cả giá trị đều truyền dưới dạng tham số đầu vào. Có kiểm tra rỗng và các ràng buộc khóa chính, khóa ngoại.
+create or alter proc lab5Bai4Caua
+	@manv nvarchar(9), @mada int, @stt int, @thoigian float
+as
+begin
+	if (@manv is not null
+	and @mada is not null
+	and @stt is not null)
+		begin
+			if exists (select *
+						from phancong
+						where ma_nvien = @manv)
+			and exists (select *
+						from nhanvien
+						where manv = @manv)
+				begin
+					if exists (select *
+								from phancong
+								where mada = @mada and stt = @stt)
+					and exists (select *
+								from congviec
+								where mada = @mada and stt = @stt)
+						begin
+							if not exists (select *
+											from phancong
+											where ma_nvien = @manv and mada = @mada and stt = @stt)
+								begin
+									insert into phancong values
+									(@manv, @mada, @stt, @thoigian);
+								end
+							else
+								begin
+									print N'Đã tồn tại thực thể này';
+								end
+						end
+					else
+						begin
+							print N'Lỗi khoá ngoại không trùng khớp (bảng phân công và bảng công việc)';
+						end
+				end
+			else
+				begin
+					print N'Lỗi khoá ngoại không trùng khớp (bảng phân công và bảng nhân viên)';
+				end
+		end
+	else
+		begin
+			print N'Mã nhân viên, mã dự án và stt không được để rỗng';
+		end
+end;
+go
+
+exec lab5Bai4Caua '003', 20, 1, 20;
+go
