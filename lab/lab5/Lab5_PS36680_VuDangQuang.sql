@@ -1,8 +1,10 @@
 ﻿-- Lab 5
+use QLDA;
+go
 
 -- Bài 1: Viết stored-procedure
 -- In ra dòng ‘Xin chào’ + @ten với @ten là tham số đầu vào là tên Tiếng Việt có dấu của bạn
-create or alter proc lab5Bai1Caua 
+create proc lab5Bai1Caua 
 	@ten nvarchar(15)
 as
 begin
@@ -14,7 +16,7 @@ exec lab5Bai1Caua N'Vũ Đăng Quang';
 go
 
 -- Nhập vào 2 số @s1,@s2. In ra câu ‘Tổng là : @tg’ với @tg=@s1+@s2
-create or alter proc lab5Bai1Caub 
+create proc lab5Bai1Caub 
 	@s1 int, @s2 int
 as
 begin
@@ -30,7 +32,7 @@ exec lab5Bai1Caub 7, 9;
 go
 
 -- Nhập vào số nguyên @n. In ra tổng các số chẵn từ 1 đến @n
-create or alter proc lab5Bai1Cauc
+create proc lab5Bai1Cauc
 	@n int
 as
 begin
@@ -50,7 +52,7 @@ exec lab5Bai1Cauc 79;
 go
 
 -- Nhập vào 2 số. In ra ước chung lớn nhất của chúng
-create or alter proc lab5Bai1Caud
+create proc lab5Bai1Caud
 	@s1 int, @s2 int, @ucln int out
 as
 begin
@@ -84,7 +86,7 @@ use QLDA;
 go
 
 -- Nhập vào @Manv, xuất thông tin các nhân viên theo @Manv.
-create or alter proc lab5Bai2Caua
+create proc lab5Bai2Caua
 	@manv nvarchar(9)
 as
 begin
@@ -98,7 +100,7 @@ exec lab5Bai2Caua '007';
 go
 
 -- Nhập vào @MaDa (mã đề án), cho biết số lượng nhân viên tham gia đề án đó
-create or alter proc lab5Bai2Caub
+create proc lab5Bai2Caub
 	@mada int
 as
 begin
@@ -113,7 +115,7 @@ exec lab5Bai2Caub 20;
 go
 
 -- Nhập vào @MaDa và @Ddiem_DA (địa điểm đề án), cho biết số lượng nhân viên tham gia đề án có mã đề án là @MaDa và địa điểm đề án là @Ddiem_DA
-create or alter proc lab5Bai2Cauc
+create proc lab5Bai2Cauc
 	@mada int, @ddiem_da nvarchar(15)
 as
 begin
@@ -130,7 +132,7 @@ exec lab5Bai2Cauc 3, 'TP HCM';
 go
 
 -- Nhập vào @Trphg (mã trưởng phòng), xuất thông tin các nhân viên có trưởng phòng là @Trphg và các nhân viên này không có thân nhân.
-create or alter proc lab5Bai2Caud
+create proc lab5Bai2Caud
 	@trphg nvarchar(9)
 as
 begin
@@ -150,7 +152,7 @@ exec lab5Bai2Caud '008';
 go
 
 -- Nhập vào @Manv và @Mapb, kiểm tra nhân viên có mã @Manv có thuộc phòng ban có mã @Mapb hay không
-create or alter proc lab5Bai2Caue
+create proc lab5Bai2Caue
 	@manv nvarchar(9), @mapb int
 as
 begin
@@ -169,7 +171,7 @@ go
 
 -- Bài 3: Sử dụng cơ sở dữ liệu QLDA, viết các proc
 -- Thêm phòng ban có tên CNTT vào csdl QLDA, các giá trị được thêm vào dưới dạng tham số đầu vào, kiếm tra nếu trùng Maphg thì thông báo thêm thất bại
-create or alter proc lab5Bai3Caua
+create proc lab5Bai3Caua
 	@tenpb nvarchar(15), @mapb int, @trpb nvarchar(9), @ngaync date
 as
 begin
@@ -187,7 +189,7 @@ exec lab5Bai3Caua 'CNTT', 9, '009', '2023-09-07';
 go
 
 -- Cập nhật phòng ban có tên CNTT thành phòng IT
-create or alter proc lab5Bai3Caub
+create proc lab5Bai3Caub
 as
 begin
 	if exists (select tenphg from phongban where tenphg = 'CNTT')
@@ -208,7 +210,7 @@ go
 -- nhân viên này trực thuộc phòng IT
 -- Nhận @luong làm tham số đầu vào cho cột Luong, nếu @luong<25000 thì nhân viên này do nhân viên có mã 009 quản lý, ngươc lại do nhân viên có mã 005 quản lý
 -- Nếu là nhân viên nam thi nhân viên phải nằm trong độ tuổi 18-65, nếu là nhân viên nữ thì độ tuổi phải từ 18-60
-create or alter proc lab5Bai3Cauc
+create proc lab5Bai3Cauc
 	@honv nvarchar(15), @tenlot nvarchar(15), @tennv nvarchar(15), @manv nvarchar(9), @ngsinh datetime, @dchi nvarchar(30), @phai nvarchar(3), @luong float, @phg int
 as
 begin
@@ -238,7 +240,7 @@ go
 
 -- Bài 4:
 -- Viết SP thêm một phân công công việc mới vào bảng phân công, tất cả giá trị đều truyền dưới dạng tham số đầu vào. Có kiểm tra rỗng và các ràng buộc khóa chính, khóa ngoại.
-create or alter proc lab5Bai4Caua
+create proc lab5Bai4Caua
 	@manv nvarchar(9), @mada int, @stt int, @thoigian float
 as
 begin
@@ -290,4 +292,26 @@ end;
 go
 
 exec lab5Bai4Caua '003', 20, 1, 20;
+go
+
+-- Cập nhật thời gian làm việc của các công việc đã phân công của dự án số 10 thêm 4 giờ ở những dòng dữ liệu chưa quá 30 giờ
+create proc lab5Bai4Caub
+as
+begin
+	if exists (select *
+				from phancong
+				where thoigian < 30 and mada = 10)
+		begin
+			update phancong
+			set thoigian += 4
+			where thoigian < 30 and mada = 10
+		end
+	else
+		begin
+			print N'Không tồn tại mã dự án 10 hoặc thời gian thực hiện dự án này đều vượt quá 30 giờ'
+		end
+end;
+go
+
+exec lab5Bai4Caub;
 go
