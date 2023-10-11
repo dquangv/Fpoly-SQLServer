@@ -4,7 +4,7 @@ go
 
 -- Bài 1: Viết các hàm
 -- Nhập vào MaNV cho biết tuổi của nhân viên này.
-create or alter function fAge(@manv nvarchar(9))
+create function fAge(@manv nvarchar(9))
 returns int
 as
 begin
@@ -16,7 +16,7 @@ print N'Tuổi của nhân viên này là: ' + convert(nvarchar, dbo.fAge('001')
 go
 
 -- Nhập vào Manv cho biết số lượng đề án nhân viên này đã tham gia
-create or alter function fCountStaffProject(@manv nvarchar(9))
+create function fCountStaffProject(@manv nvarchar(9))
 returns int
 as
 begin
@@ -28,7 +28,7 @@ print N'Số lượng đề án mà nhân viên này tham gia: ' + cast(dbo.fCou
 go
 
 -- Truyền tham số vào phái nam hoặc nữ, xuất số lượng nhân viên theo phái
-create or alter function fCountStaffSex(@phai nvarchar(3))
+create function fCountStaffSex(@phai nvarchar(3))
 returns int
 as
 begin
@@ -40,7 +40,7 @@ print N'Số lượng nhân viên của phái này là: ' + cast(dbo.fCountStaff
 go
 
 -- Truyền tham số đầu vào là tên phòng, tính mức lương trung bình của phòng đó, Cho biết họ tên nhân viên (HONV, TENLOT, TENNV) có mức lương trên mức lương trung bình của phòng đó.
-create or alter function fAve_TenPhg(@tenphg nvarchar(15))
+create function fAve_TenPhg(@tenphg nvarchar(15))
 returns table
 as
 return (
@@ -58,7 +58,7 @@ from fAve_TenPhg(N'Điều Hành');
 go
 
 -- Tryền tham số đầu vào là Mã Phòng, cho biết tên phòng ban, họ tên người trưởng phòng và số lượng đề án mà phòng ban đó chủ trì
-create or alter function fTrPhong_DAn(@maphg int)
+create function fTrPhong_DAn(@maphg int)
 returns table
 as
 return (
@@ -75,7 +75,7 @@ go
 
 -- Bài 2: Tạo các view
 -- Hiển thị thông tin HoNV,TenNV,TenPHG, DiaDiemPhg.
-create or alter view view_NhVien_Phong
+create view view_NhVien_Phong
 as
 select honv, tennv, tenphg, diadiem
 from nhanvien nv join phongban pb on nv.phg = pb.maphg join diadiem_phg ddphg on ddphg.maphg = pb.maphg;
@@ -86,7 +86,7 @@ from view_NhVien_Phong;
 go
 
 -- Hiển thị thông tin TenNv, Lương, Tuổi.
-create or alter view view_NhVien_Luong_Tuoi
+create view view_NhVien_Luong_Tuoi
 as
 select tennv, luong, year(getdate()) - year(ngsinh) as Tuoi
 from nhanvien;
@@ -96,7 +96,7 @@ select *
 from view_NhVien_Luong_Tuoi;
 go
 -- Hiển thị tên phòng ban và họ tên trưởng phòng của phòng ban có đông nhân viên nhất
-create or alter view view_PhongDongNhat_TrPhong
+create view view_PhongDongNhat_TrPhong
 as
 select tenphg as TenPhongBan, concat(nv.honv, ' ', nv.tenlot, ' ', nv.tennv) as HoTenTruongPhong, count(nhanvien.manv) as SoLuongNhanVien
 from phongban pb 

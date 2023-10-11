@@ -4,7 +4,7 @@ go
 
 -- Bài 1: Trigger DML
 -- Ràng buộc khi thêm mới nhân viên thì mức lương phải lớn hơn 15000, nếu vi phạm thì xuất thông báo “luong phải >15000’
-create or alter trigger check_insertLuong on nhanvien
+create trigger check_insertLuong on nhanvien
 for insert
 as
 if (select luong from inserted) < 15000
@@ -19,7 +19,7 @@ insert into nhanvien values
 go
 
 -- Ràng buộc khi thêm mới nhân viên thì độ tuổi phải nằm trong khoảng 18 <= tuổi <=65.
-create or alter trigger check_insertTuoi on nhanvien
+create trigger check_insertTuoi on nhanvien
 for insert
 as
 declare @age int = (select year(getdate()) - year(ngsinh) from inserted);
@@ -35,7 +35,7 @@ insert into nhanvien values
 go
 
 -- Ràng buộc khi cập nhật nhân viên thì không được cập nhật những nhân viên ở TP HCM
-create or alter trigger check_updateDChi on nhanvien
+create trigger check_updateDChi on nhanvien
 for update
 as
 if (select dchi from inserted) like '%TP HCM'
@@ -52,7 +52,7 @@ go
 
 -- Bài 2: Trigger After
 -- Hiển thị tổng số lượng nhân viên nữ, tổng số lượng nhân viên nam mỗi khi có hành động thêm mới nhân viên.
-create or alter trigger count_NV on nhanvien
+create trigger count_NV on nhanvien
 after insert
 as
 begin
@@ -72,7 +72,7 @@ insert into nhanvien values
 go
 
 -- Hiển thị tổng số lượng nhân viên nữ, tổng số lượng nhân viên nam mỗi khi có hành động cập nhật phần giới tính nhân viên
-create or alter trigger count_NV_Phai on nhanvien
+create trigger count_NV_Phai on nhanvien
 after update
 as
 begin
@@ -95,7 +95,7 @@ where manv = '004';
 go
 
 -- Hiển thị tổng số lượng đề án mà mỗi nhân viên đã làm khi có hành động xóa trên bảng DEAN
-create or alter trigger count_dean on dean
+create trigger count_dean on dean
 after delete
 as
 begin
@@ -125,7 +125,7 @@ delete from nhanvien where manv = '017';
 go
 
 -- Khi thêm một nhân viên mới thì tự động phân công cho nhân viên làm đề án có MADA là 1.
-create or alter trigger add_PhanCong on nhanvien
+create trigger add_PhanCong on nhanvien
 instead of insert
 as
 begin
