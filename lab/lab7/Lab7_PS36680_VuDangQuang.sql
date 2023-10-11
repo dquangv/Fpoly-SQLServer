@@ -113,3 +113,68 @@ go
 select *
 from view_PhongDongNhat_TrPhong;
 go
+
+-- Tạo View hiển thị thông tin MaNV, HoTenNV, TenPHG, Tổng thời gian tham gia vào các dự án.
+create view Lab7Bai3Caua
+as
+select manv, concat(honv, ' ', tenlot, ' ', tennv) as HoTenNV, tenphg, sum(thoigian) as TongThoiGianDuAn
+from nhanvien nv
+join phongban pb on nv.phg = pb.maphg
+join phancong pc on nv.manv = pc.ma_nvien
+group by manv, concat(honv, ' ', tenlot, ' ', tennv), tenphg;
+go
+
+select *
+from Lab7Bai3Caua;
+go
+
+-- Tạo View cho phép cập nhật thông tin DeAn, gồm: MaDA, TenDA, DDIEM_DA, PHONG. Thực hiện thêm 1 đề án mới vào View vừa tạo.
+create view Lab7Bai3Caub
+as
+select mada, tendean, ddiem_da, phong
+from dean;
+go
+
+insert into Lab7Bai3Caub values
+(4, N'Sản phẩm A', N'Đà Lạt', 4);
+go
+
+-- Viết hàm cho nhập vào MaDA, tính tổng thời gian làm việc của các nhân nhiên tham gia đề án đó.
+create function fLab7Bai3Cauc(@mada int)
+returns table
+as
+return (
+	select mada, sum(thoigian) as TongThoiGianLamViec
+	from phancong
+	where mada = @mada
+	group by mada
+);
+go
+
+select *
+from fLab7Bai3Cauc(20);
+go
+
+-- Viết hàm cho nhập vào MaDA, đếm số nhân nhiên tham gia đề án đó.
+create function fLab7Bai3Caud(@mada int)
+returns table
+as
+return (
+	select mada, count(ma_nvien) as SoLuongNhanVienThamGia
+	from phancong
+	where mada = @mada
+	group by mada
+);
+go
+
+select *
+from fLab7Bai3Caud(1);
+go
+
+-- Viết truy vấn hiển thị thông tin: MaDA, TenDA, TenPB chủ trì, số nhân viên tham gia đề án, Tổng thời gian tham gia. (sử dụng 2 hàm đã tạo ở câu trên)
+select fc.mada, da.tendean, pb.tenphg, fd.SoLuongNhanVienThamGia, fc.TongThoiGianLamViec
+from fLab7Bai3Cauc(1) fc
+join fLab7Bai3Caud(1) fd on fc.mada = fd.mada
+join dean da on fc.mada = da.mada
+join phongban pb on da.phong = pb.maphg;
+go
