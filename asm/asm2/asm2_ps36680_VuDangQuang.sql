@@ -1,4 +1,7 @@
-﻿create database QlNhaTro_ps36680;
+﻿drop database QlNhaTro_ps36680;
+go
+
+create database QlNhaTro_ps36680;
 go
 
 use QlNhaTro_ps36680;
@@ -113,35 +116,35 @@ N'15 Gò Dầu, phường 8', N'Quận Tân Bình', null);
 go
 
 insert into nhatro values
-(1, 54, 5500, N'1 Hương Lộ 2, phường Bình Trị Đông', 
+(1, 54.2, 5500000000, N'1 Hương Lộ 2, phường Bình Trị Đông', 
 N'Quận Bình Tân', N'5 phòng ngủ, 6 phòng vệ sinh', 2, '2023-09-07', 7),
-(2, 200, 25900, N'2 Đường số 8, phường An Phú', N'Quận 2', 
+(2, 200.5, 25900000000, N'2 Đường số 8, phường An Phú', N'Quận 2', 
 N'5 phòng ngủ, 6 phòng vệ sinh, sân vườn', 2, '2023-07-25', 4),
-(3, 35, 1850, N'3 Dương Thị Mười, phường Tân Chánh Hiệp', 
+(3, 35.7, 1850000000, N'3 Dương Thị Mười, phường Tân Chánh Hiệp', 
 N'Quận 12', N'2 phòng ngủ, 2 phòng vệ sinh', 2, '2023-01-25', 6),
-(4, 80, 3800, N'4 Võ Văn Kiệt, phường An Lạc', 
+(4, 80, 3800000000, N'4 Võ Văn Kiệt, phường An Lạc', 
 N'Quận Bình Tân',null, 1, '2023-08-22', 1),
-(5, 92, 4500, N'5 Võ Văn Kiệt, phường An Lạc', 
+(5, 92, 4500000, N'5 Võ Văn Kiệt, phường An Lạc', 
 N'Quận Bình Tân', N'3 phòng ngủ, 2 phòng vệ sinh', 1, '2023-07-01', 9),
-(6, 47, 1650, N'6 Nguyễn Xiển, phường Long Thạnh Mỹ', 
+(6, 47.8, 1650000000, N'6 Nguyễn Xiển, phường Long Thạnh Mỹ', 
 N'Quận 9', N'1 phòng ngủ', 1, '2023-07-20', 3),
-(7, 35, 6.5, N'7 Đặng Văn Ngữ, phường 14', 
+(7, 35, 6500000, N'7 Đặng Văn Ngữ, phường 14', 
 N'Quận Phú Nhuận', N'ban công, giữ xe miễn phí', 3, '2023-12-07', 8),
-(8, 50, 12, N'8 Sông Đà, phường 2', 
+(8, 50, 12000000, N'8 Sông Đà, phường 2', 
 N'Quận Tân Bình', null, 3, '2023-01-01', 10),
-(9, 284, 34000, N'9 Lê Lai, phường 3', 
+(9, 284.25, 34000000000, N'9 Lê Lai, phường 3', 
 N'Quận Gò Vấp', N'1 trệt, 3 lầu, mặt tiền', 4, '2023-05-05', 5),
-(10, 100, 15000, N'10 Quốc Lộ 13, phường Hiệp Bình Phước', 
+(10, 100, 15000000000, N'10 Quốc Lộ 13, phường Hiệp Bình Phước', 
 N'Quận 9', N'1 hầm, 4 lầu, gần trường học, công viên, hồ bơi', 4, '2023-10-10', 2),
-(11, 15, 3, N'11 Gò Dầu, phường 8',
+(11, 15.5, 2000000, N'11 Gò Dầu, phường 8',
 N'Quận Tân Bình', null, 3, '2023-02-03', 14),
-(12, 79, 4200, N'12 Sơn kỳ, phường Sơn Kỳ',
+(12, 79, 4200000000, N'12 Sơn kỳ, phường Sơn Kỳ',
 N'Quận Tân Phú', N'3 phòng ngủ, 2 phòng vệ sinh', 2, '2023-07-09', 14),
-(13, 130, 18500, N'13 Trường Chinh, phường 8',
+(13, 130.65, 18500000000, N'13 Trường Chinh, phường 8',
 N'Quận Tân Bình', null, 4, '2023-08-10', 11),
-(14, 97, 1200, N'14 Lý Thường Kiệt, phường 9',
+(14, 97, 1200000000, N'14 Lý Thường Kiệt, phường 9',
 N'Quận 10', N'ban công, 2 lầu', 1, '2023-07-26', 13),
-(15, 20, 10, N'15 Võ Văn Ngân, phường Linh Phương',
+(15, 20.7, 10000000, N'15 Võ Văn Ngân, phường Linh Phương',
 N'Quận 9', null, 3, '2023-12-20', 15);
 go
 
@@ -163,6 +166,7 @@ insert into danhgia values
 (10, 15, 1, null);
 go
 
+-- Y3. CÁC YÊU CẦU VỀ CHỨC NĂNG
 -- Tạo ba Stored Procedure (SP) với các tham số đầu vào phù hợp.
 -- SP thứ nhất thực hiện chèn dữ liệu vào bảng NGUOIDUNG
 create proc nguoidung_insert
@@ -213,10 +217,90 @@ begin
 end;
 go
 
-exec nhatro_insert 16, 250, 30000, N'16 Đoàn Thị Điểm, phường 12', N'Quận Tân Phú', null, 4, '2023-10-10', 10;
+exec nhatro_insert 16, 250, 30000000000, N'16 Đoàn Thị Điểm, phường 12', N'Quận Tân Phú', null, 4, '2023-10-10', 10;
 go
 
 exec nhatro_insert 17, 500, 10, null, N'Quận Bình Tân', null, 4, null, 15;
 go
 
 -- SP thứ ba thực hiện chèn dữ liệu vào bảng DANHGIA
+create proc danhgia_insert
+	@manguoidanhgia int, @manhatro int, @danhgia bit, @noidung nvarchar(250)
+as
+begin
+	if (@manguoidanhgia is null) or (@manhatro is null) or (@danhgia is null)
+		begin
+			print N'Yêu cầu nhập liệu đầy đủ';
+		end
+	else
+		begin
+			insert into danhgia values
+			(@manguoidanhgia, @manhatro, @danhgia, @noidung);
+			
+			select *
+			from danhgia;
+		end
+end
+go
+
+exec danhgia_insert 12, 14, 1, null;
+go
+
+exec danhgia_insert null, 15, null, N'Đẹp';
+go
+
+-- Viết 1 SP với các tham số đầu vào phù hợp, thực hiện tìm kiếm thông tin các phòng trọ thoả mãn đk tìm kiếm theo: quận, phạm vi diện tích, phạm vi ngày đăng tin, khoảng giá tiền, loại hình nhà trọ.
+create or alter proc timkiem_phongtro
+	@quan nvarchar(20), @dientichMin float = null, @dientichMax float = null, @ngaydangtinMin date = null, @ngaydangtinMax date = null,
+	@giaphongMin money = null, @giaphongMax money = null, @loainhatro nvarchar(50)
+as
+begin
+	if (@dientichMin is null)
+		select @dientichMin = min(dientich) from nhatro;
+	if (@dientichMax is null)
+		select @dientichMax = max(dientich) from nhatro;
+	if (@ngaydangtinMin is null)
+		select @ngaydangtinMin = min(ngaydangtin) from nhatro;
+	if (@ngaydangtinMax is null)
+		select @ngaydangtinMax = max(ngaydangtin) from nhatro;
+	if (@giaphongMin is null)
+		select @giaphongMin = min(giaphong) from nhatro;
+	if (@giaphongMax is null)
+		select @giaphongMax = max(giaphong) from nhatro;
+
+	select N'Cho thuê phòng trọ tại ' + nt.diachi + ', ' + nt.quan as DiaChiNhaTro,
+		replace(dientich, '.', ',') + ' m2' as DienTich,
+		replace(substring(convert(varchar, giaphong, 1), 1, len(convert(varchar, giaphong, 1)) - 3), ',', '.') as GiaPhong,
+		mota as MoTa,
+		convert(varchar, ngaydangtin, 105) as NgayDangTin,
+		NguoiLienHe = case
+			when gioitinh = N'Nam' then 'A. ' + tennguoidung
+			when gioitinh = N'Nữ' then 'C. ' + tennguoidung
+			else tennguoidung
+			end,
+		dienthoai as SoDienThoai,
+		nd.diachi + ', ' + nd.quan as DiaChiNguoiLienHe
+	from nguoidung nd
+	join nhatro nt on nd.manguoidung = nt.manguoilienhe
+	join loainha ln on ln.maloainha = nt.maloainha
+	where nt.quan = @quan
+	and dientich between @dientichMin and @dientichMax
+	and ngaydangtin between @ngaydangtinMin and @ngaydangtinMax
+	and giaphong between @giaphongMin and @giaphongMax
+	and tenloainha = @loainhatro;
+
+	print cast(@dientichMin as varchar);
+	print cast(@dientichMax as varchar);
+	print cast(@ngaydangtinMin as varchar);
+	print cast(@ngaydangtinMax as varchar);
+	print cast(@giaphongMin as varchar);
+	print cast(@giaphongMax as varchar);
+
+end
+go
+
+exec timkiem_phongtro N'Quận Bình Tân', null, null, null, null, null, null, N'Chung cư';
+go
+
+exec timkiem_phongtro N'Quận Tân Bình', null, 100, '2023-01-01', '2023-11-11', 10000000, null, N'Nhà trọ';
+go
