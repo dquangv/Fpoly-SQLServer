@@ -114,6 +114,7 @@ select *
 from view_PhongDongNhat_TrPhong;
 go
 
+-- Bài 3
 -- Tạo View hiển thị thông tin MaNV, HoTenNV, TenPHG, Tổng thời gian tham gia vào các dự án.
 create view Lab7Bai3Caua
 as
